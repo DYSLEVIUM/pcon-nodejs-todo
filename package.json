@@ -4,9 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "build": "cd client && yarn run build && cd ..",
-    "start": "yarn run build && node app",
-    "dev": "node app"
+    "start": "node app"
   },
   "keywords": [],
   "author": "",
