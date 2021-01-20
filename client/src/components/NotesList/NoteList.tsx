@@ -18,7 +18,7 @@ export default function NoteList() {
     (async () => {
       await getAllNotes().then((res: NoteInterface[]) => setNotes(res));
     })();
-  }, [notes]);
+  }, []);
 
   const addClicked = async () => {
     const newNote: NoteInterface = {
@@ -27,8 +27,11 @@ export default function NoteList() {
     };
 
     await addNote(newNote);
+
     if (titleRef.current) titleRef.current.innerText = '';
     if (descriptionRef.current) descriptionRef.current.innerText = '';
+
+    await getAllNotes().then((res: NoteInterface[]) => setNotes(res));
   };
 
   return (
