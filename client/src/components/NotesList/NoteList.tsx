@@ -9,16 +9,18 @@ export default function NoteList() {
   const [notes, setNotes] = useState<NoteInterface[]>([]);
 
   useEffect(() => {
-    getAllNotes().then((res: NoteInterface[]) => setNotes(res));
+    (async () => {
+      await getAllNotes().then((res: NoteInterface[]) => setNotes(res));
+    })();
   }, [notes]);
 
-  const addItem = () => {
+  const addClicked = async () => {
     const newNote: NoteInterface = {
       title: 'hello from front',
       description: 'front desc',
     };
 
-    addNote(newNote);
+    await addNote(newNote);
   };
 
   return (
@@ -27,7 +29,7 @@ export default function NoteList() {
         return <NoteListItem key={index} note={note} />;
       })}
 
-      <button type="submit" onClick={addItem}>
+      <button type="submit" onClick={addClicked}>
         Add
       </button>
     </div>

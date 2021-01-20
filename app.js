@@ -71,7 +71,7 @@ app.get('/getNote/:noteId', (req, res) => {
 
 //  update
 app.patch('/updateNote', (req, res) => {
-  let sql = `UPDATE ${tableName} SET publicId='${req.body.publicId}', title='${req.body.title}', description='${req.body.description}' WHERE noteId = ${req.body.noteId}`;
+  let sql = `UPDATE ${tableName} SET publicId='${req.body.publicId}', title='${req.body.title}', description='${req.body.description}' WHERE noteId=${req.body.noteId}`;
 
   pool.query(sql, (err, result) => {
     if (err) console.log(err);
