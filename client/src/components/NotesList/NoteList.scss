@@ -1,0 +1,59 @@
+.noteListContainerWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: 2rem;
+
+  @media only screen and (max-width: 700px) {
+    flex-direction: column;
+  }
+
+  .noteListContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .addNoteContainer {
+    .noteTitle,
+    .noteDescription {
+      min-width: 15rem;
+      width: 100%;
+      word-wrap: break-word;
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+
+      border: 2px solid rgba(170, 170, 170, 0.096);
+      transition: 250ms ease-in-out;
+      border-radius: 10px;
+
+      font-family: inherit;
+
+      @media only screen and (max-width: 700px) {
+        width: 100%;
+      }
+
+      &:read-only {
+        border-color: transparent;
+      }
+
+      &:focus:not(:read-only) {
+        border: 2px solid rgba(25, 152, 236, 0.925);
+      }
+    }
+
+    .heading {
+      margin-bottom: 1rem;
+    }
+
+    .noteDescriptionContainer {
+      margin: 2rem 0;
+    }
+
+    .addBtn {
+      height: fit-content;
+    }
+  }
+}

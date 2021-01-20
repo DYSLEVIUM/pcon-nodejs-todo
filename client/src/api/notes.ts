@@ -3,7 +3,7 @@ import { getPublicId } from './publicIP';
 
 //  !   change endpoint later
 export async function addNote(Note: NoteInterface): Promise<Response> {
-  return fetch('/addNote', {
+  return fetch('http://localhost/addNote', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -16,7 +16,7 @@ export async function addNote(Note: NoteInterface): Promise<Response> {
 }
 
 export function getAllNotes(): Promise<NoteInterface[]> {
-  return fetch('/getNotes', {
+  return fetch('http://localhost/getNotes', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ export function getAllNotes(): Promise<NoteInterface[]> {
 }
 
 export function getNote(noteId: number): Promise<NoteInterface> {
-  return fetch(`/getNote/${noteId}`, {
+  return fetch(`http://localhost/getNote/${noteId}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ export function getNote(noteId: number): Promise<NoteInterface> {
 }
 
 export async function updateNote(newNote: NoteInterface): Promise<Response> {
-  return fetch('/updateNote', {
+  return fetch('http://localhost/updateNote', {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -47,7 +47,7 @@ export async function updateNote(newNote: NoteInterface): Promise<Response> {
 }
 
 export function deleteNote(noteId: number): Promise<Response> {
-  return fetch(`/deleteNote/${noteId}`, {
+  return fetch(`http://localhost/deleteNote/${noteId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',

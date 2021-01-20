@@ -6,18 +6,18 @@ import './NoteListItem.scss';
 export default function NoteListItem(props: any) {
   const [isEditActive, setIsEditActive] = useState<boolean>(false);
 
-  let titleRef = useRef<HTMLInputElement>(null);
-  let descriptionRef = useRef<HTMLInputElement>(null);
+  let titleRef = useRef<HTMLDivElement>(null);
+  let descriptionRef = useRef<HTMLDivElement>(null);
 
   const editDoneClicked = async () => {
     const newNote: NoteInterface = {
-      title: titleRef.current?.value || '',
-      description: descriptionRef.current?.value || '',
+      title: titleRef.current?.innerText || '',
+      description: descriptionRef.current?.innerText || '',
       noteId: props.note.noteId,
     };
 
-    await updateNote(newNote);
     setIsEditActive(false);
+    await updateNote(newNote);
   };
 
   const deleteClicked = async () => {
@@ -25,32 +25,45 @@ export default function NoteListItem(props: any) {
   };
 
   return (
-    <div>
-      <input
-        defaultValue={props.note.title}
-        style={isEditActive ? { cursor: 'text' } : { cursor: 'default' }}
-        ref={titleRef}
-        readOnly={!isEditActive}
-      ></input>
-      <input
-        defaultValue={props.note.description}
-        style={isEditActive ? { cursor: 'text' } : { cursor: 'default' }}
-        ref={descriptionRef}
-        readOnly={!isEditActive}
-      ></input>
-      <button
-        onClick={editDoneClicked}
-        style={isEditActive ? { display: 'block' } : { display: 'none' }}
-      >
-        Done
-      </button>
-      <button
-        onClick={() => setIsEditActive(true)}
-        style={isEditActive ? { display: 'none' } : { display: 'block' }}
-      >
-        Edit
-      </button>
-      <button onClick={deleteClicked}>Delete</button>
+    <div className="noteListItemContainer">
+      <div className="titleContainer">
+        <div
+          className="noteTitle"
+          contentEditable={isEditActive ? true : false}
+          suppressContentEditableWarning={true}
+          style={isEditActive ? { cursor: 'text' } : { cursor: 'default' }}
+          ref={titleRef}
+        >
+          {props.note.title}
+        </div>
+      </div>
+
+      <div className="descriptionContainer">
+        <div
+          className="noteDesc"
+          contentEditable={isEditActive ? true : false}
+          suppressContentEditableWarning={true}
+          style={isEditActive ? { cursor: 'text' } : { cursor: 'default' }}
+          ref={descriptionRef}
+        >
+          {props.note.description}
+        </div>
+      </div>
+      <div className="btnContainer">
+        <button
+          onClick={editDoneClicked}
+          style={isEditActive ? { display: 'block' } : { display: 'none' }}
+        >
+          Done
+        </button>
+        <button
+          onClick={() => setIsEditActive(true)}
+          style={isEditActive ? { display: 'none' } : { display: 'block' }}
+        >
+          Edit
+        </button>
+        <button onClick={deleteClicked}>Delete</button>
+      </div>
     </div>
   );
 }

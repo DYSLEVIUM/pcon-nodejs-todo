@@ -2,7 +2,11 @@ import './App.scss';
 import NoteList from './components/NotesList/NoteList';
 
 function App() {
-  return <NoteList />;
+  return (
+    <main>
+      <NoteList />
+    </main>
+  );
 }
 
 export default App;

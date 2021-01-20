@@ -1,3 +1,62 @@
-input {
-  padding: 1rem;
+.noteListItemContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 20rem;
+  padding: 0.5rem;
+  margin: 3rem 2rem;
+  margin-top: 0;
+  border: 2px solid rgba(170, 170, 170, 0.342);
+  border-radius: 10px;
+  transition: 250ms ease-in-out;
+
+  &:hover {
+    box-shadow: 0px 0px 25px 1px rgba(0, 0, 0, 0.3);
+  }
+
+  .titleContainer,
+  .descriptionContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+
+    .noteTitle,
+    .noteDesc {
+      width: 100%;
+      word-wrap: break-word;
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+
+      border: 2px solid rgba(170, 170, 170, 0.096);
+      transition: 250ms ease-in-out;
+      border-radius: 10px;
+
+      font-family: inherit;
+
+      &:read-only {
+        border-color: transparent;
+      }
+
+      &:focus:not(:read-only) {
+        border: 2px solid rgba(25, 152, 236, 0.925);
+      }
+    }
+
+    .noteTitle {
+      font-size: 1.5rem;
+    }
+  }
+
+  .btnContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    padding: 1rem;
+  }
 }
