@@ -3,6 +3,25 @@ main {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
+
+  .title {
+    font-size: 3rem;
+    margin: 3rem;
+  }
+
+  .disclaimer {
+    p {
+      a {
+        text-decoration: underline;
+      }
+      padding-bottom: 1rem;
+    }
+
+    font-size: 0.8rem;
+    margin: 3rem;
+    color: rgba(#fff, 0.7);
+    text-align: center;
+  }
 }

@@ -13,15 +13,15 @@ export default function NoteListItem(props: any) {
     const newNote: NoteInterface = {
       title: titleRef.current?.innerText || '',
       description: descriptionRef.current?.innerText || '',
-      noteId: props.note.noteId,
     };
 
     setIsEditActive(false);
-    await updateNote(newNote);
+    await updateNote(props.note.noteId, newNote);
   };
 
   const deleteClicked = async () => {
     await deleteNote(props.note.noteId);
+    props.onDeleteNote();
   };
 
   return (
@@ -53,16 +53,20 @@ export default function NoteListItem(props: any) {
         <button
           onClick={editDoneClicked}
           style={isEditActive ? { display: 'block' } : { display: 'none' }}
+          className="doneBtn"
         >
           Done
         </button>
         <button
           onClick={() => setIsEditActive(true)}
           style={isEditActive ? { display: 'none' } : { display: 'block' }}
+          className="editBtn"
         >
           Edit
         </button>
-        <button onClick={deleteClicked}>Delete</button>
+        <button onClick={deleteClicked} className="deleteBtn">
+          Delete
+        </button>
       </div>
     </div>
   );

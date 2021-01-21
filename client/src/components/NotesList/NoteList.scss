@@ -6,7 +6,7 @@
   padding: 2rem;
 
   @media only screen and (max-width: 700px) {
-    flex-direction: column;
+    flex-direction: column-reverse;
   }
 
   .noteListContainer {
@@ -17,6 +17,7 @@
   }
 
   .addNoteContainer {
+    padding: 3rem 1rem;
     .noteTitle,
     .noteDescription {
       min-width: 15rem;
@@ -26,7 +27,7 @@
       padding: 0.5rem 1rem;
 
       border: 2px solid rgba(170, 170, 170, 0.096);
-      transition: 250ms ease-in-out;
+      transition: border 250ms ease-in-out;
       border-radius: 10px;
 
       font-family: inherit;
@@ -53,7 +54,15 @@
     }
 
     .addBtn {
-      height: fit-content;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+
+      transition: border 250ms ease-in-out;
+      &:hover {
+        border-color: rgba(236, 25, 236, 0.925);
+      }
     }
   }
 }

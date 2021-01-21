@@ -42,13 +42,13 @@ router.get('/getNote/:noteId', (req, res) => {
 });
 
 //  update
-router.patch('/updateNote', (req, res) => {
+router.patch('/updateNote/:noteId', (req, res) => {
   try {
     const newNote = {
       publicId: req.body.publicId,
       title: req.body.title,
       description: req.body.description,
-      noteId: req.body.noteId,
+      noteId: req.params.noteId,
     };
     db.updateNote(newNote).then((result) => res.send(result));
   } catch (e) {

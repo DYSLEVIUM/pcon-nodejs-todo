@@ -35,8 +35,11 @@ export function getNote(noteId: number): Promise<NoteInterface> {
   }).then((res: Response) => res.json());
 }
 
-export async function updateNote(newNote: NoteInterface): Promise<Response> {
-  return fetch(`${endPoint}/updateNote`, {
+export async function updateNote(
+  noteId: number,
+  newNote: NoteInterface
+): Promise<Response> {
+  return fetch(`${endPoint}/updateNote/${noteId}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
