@@ -1,10 +1,10 @@
-require('dotenv').config();
-
 const express = require('express');
-const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
+
+const db = require('./db');
+const apiRouter = require('./routes/api');
 
 const app = express();
 const PORT = process.env.PORT || 80;
@@ -16,86 +16,13 @@ app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-//  database connection
-const pool = mysql.createPool({
-  connectionLimit: 10,
-  host: process.env.DB_HOST,
-  user: process.env.DB_USERNAME,
-  password: process.env.DB_PWD,
-  database: process.env.DB_NAME,
-  port: process.env.DB_PORT,
-});
+// create table
+db.createTable();
 
-const tableName = process.env.DB_TABLE_NAME;
+//  api endpoint
+app.use('/api', apiRouter);
 
-//  iife to create table
-(async () => {
-  let sql = `CREATE TABLE IF NOT EXISTS ${tableName} (publicId VARCHAR(50) NOT NULL, noteId INTEGER AUTO_INCREMENT PRIMARY KEY, title VARCHAR(50) NOT NULL, description VARCHAR(255));`;
-  await pool.query(sql, (err, result) => {
-    if (!err) console.log('Created notes table');
-    else console.log(err);
-  }); //  making the users table if it does not exist
-})();
-
-// endpoints;
-//  create
-app.put('/addNote', (req, res) => {
-  let sql = `INSERT INTO ${tableName} (publicId, title, description) VALUES (?,?,?)`;
-
-  pool.query(
-    sql,
-    [req.body.publicId, req.body.title, req.body.description],
-    (err, result) => {
-      if (err) console.log(err);
-      res.send(result);
-    }
-  );
-});
-
-//  read
-app.get('/getNotes', (req, res) => {
-  let sql = `SELECT * FROM ${tableName}`;
-
-  pool.query(sql, (err, result) => {
-    if (err) console.log(err);
-    res.send(result);
-  });
-});
-
-app.get('/getNote/:noteId', (req, res) => {
-  let sql = `SELECT * FROM ${tableName} WHERE noteId=?`;
-
-  pool.query(sql, [req.params.noteId], (err, result) => {
-    if (err) console.log(err);
-    res.send(result);
-  });
-});
-
-//  update
-app.patch('/updateNote', (req, res) => {
-  let sql = `UPDATE ${tableName} SET publicId=?, title=?, description=? WHERE noteId=?`;
-
-  pool.query(
-    sql,
-    [req.body.publicId, req.body.title, req.body.description, req.body.noteId],
-    (err, result) => {
-      if (err) console.log(err);
-      res.send(result);
-    }
-  );
-});
-
-//  delete
-app.delete('/deleteNote/:noteId', (req, res) => {
-  let sql = `DELETE FROM ${tableName} WHERE noteId=?`;
-
-  pool.query(sql, [req.params.noteId], (err, result) => {
-    if (err) console.log(err);
-    res.send(result);
-  });
-});
-
-//  all other endpoints go to react
+//  all other endpoints go to frontend
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
