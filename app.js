@@ -26,28 +26,30 @@ const pool = mysql.createPool({
   port: process.env.DB_PORT,
 });
 
-const tableName = 'notes';
+const tableName = process.env.DB_TABLE_NAME;
 
 //  iife to create table
 (async () => {
-  await pool.query(
-    `CREATE TABLE IF NOT EXISTS ${tableName} (publicId VARCHAR(50) NOT NULL, noteId INTEGER AUTO_INCREMENT PRIMARY KEY, title VARCHAR(50) NOT NULL, description VARCHAR(255));`,
-    (err, result) => {
-      if (!err) console.log('Created notes table');
-      else console.log(err);
-    }
-  ); //  making the users table if it does not exist
+  let sql = `CREATE TABLE IF NOT EXISTS ${tableName} (publicId VARCHAR(50) NOT NULL, noteId INTEGER AUTO_INCREMENT PRIMARY KEY, title VARCHAR(50) NOT NULL, description VARCHAR(255));`;
+  await pool.query(sql, (err, result) => {
+    if (!err) console.log('Created notes table');
+    else console.log(err);
+  }); //  making the users table if it does not exist
 })();
 
 // endpoints;
 //  create
 app.put('/addNote', (req, res) => {
-  let sql = `INSERT INTO ${tableName} (publicId, title, description) VALUES ('${req.body.publicId}','${req.body.title}','${req.body.description}')`;
+  let sql = `INSERT INTO ${tableName} (publicId, title, description) VALUES (?,?,?)`;
 
-  pool.query(sql, (err, result) => {
-    if (err) console.log(err);
-    res.send(result);
-  });
+  pool.query(
+    sql,
+    [req.body.publicId, req.body.title, req.body.description],
+    (err, result) => {
+      if (err) console.log(err);
+      res.send(result);
+    }
+  );
 });
 
 //  read
@@ -61,9 +63,9 @@ app.get('/getNotes', (req, res) => {
 });
 
 app.get('/getNote/:noteId', (req, res) => {
-  let sql = `SELECT * FROM ${tableName} WHERE noteId=${req.params.noteId}`;
+  let sql = `SELECT * FROM ${tableName} WHERE noteId=?`;
 
-  pool.query(sql, (err, result) => {
+  pool.query(sql, [req.params.noteId], (err, result) => {
     if (err) console.log(err);
     res.send(result);
   });
@@ -71,19 +73,23 @@ app.get('/getNote/:noteId', (req, res) => {
 
 //  update
 app.patch('/updateNote', (req, res) => {
-  let sql = `UPDATE ${tableName} SET publicId='${req.body.publicId}', title='${req.body.title}', description='${req.body.description}' WHERE noteId=${req.body.noteId}`;
+  let sql = `UPDATE ${tableName} SET publicId=?, title=?, description=? WHERE noteId=?`;
 
-  pool.query(sql, (err, result) => {
-    if (err) console.log(err);
-    res.send(result);
-  });
+  pool.query(
+    sql,
+    [req.body.publicId, req.body.title, req.body.description, req.body.noteId],
+    (err, result) => {
+      if (err) console.log(err);
+      res.send(result);
+    }
+  );
 });
 
 //  delete
 app.delete('/deleteNote/:noteId', (req, res) => {
-  let sql = `DELETE FROM ${tableName} WHERE noteId=${req.params.noteId}`;
+  let sql = `DELETE FROM ${tableName} WHERE noteId=?`;
 
-  pool.query(sql, (err, result) => {
+  pool.query(sql, [req.params.noteId], (err, result) => {
     if (err) console.log(err);
     res.send(result);
   });
