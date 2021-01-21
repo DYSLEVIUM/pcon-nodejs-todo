@@ -7,7 +7,8 @@ const db = require('../../db');
 
 // endpoints;
 //  create
-router.put('/addNote', (req, res) => {
+router.post('/addNote', (req, res) => {
+  //  changed request method from put to post
   try {
     const newNote = {
       publicId: req.body.publicId,
@@ -42,7 +43,8 @@ router.get('/getNote/:noteId', (req, res) => {
 });
 
 //  update
-router.patch('/updateNote/:noteId', (req, res) => {
+router.post('/updateNote/:noteId', (req, res) => {
+  //  changed request method from patch to post
   try {
     const newNote = {
       publicId: req.body.publicId,
@@ -58,7 +60,7 @@ router.patch('/updateNote/:noteId', (req, res) => {
 });
 
 //  delete
-router.delete('/deleteNote/:noteId', (req, res) => {
+router.post('/deleteNote/:noteId', (req, res) => {
   try {
     db.deleteNote(req.params.noteId).then((result) => res.send(result));
   } catch (e) {

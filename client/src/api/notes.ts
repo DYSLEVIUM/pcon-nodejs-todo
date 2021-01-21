@@ -6,7 +6,7 @@ import { getPublicId } from './publicIP';
 const endPoint = '/api'; //  production endpoint
 export async function addNote(Note: NoteInterface): Promise<Response> {
   return fetch(`${endPoint}/addNote`, {
-    method: 'PUT',
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
@@ -40,7 +40,7 @@ export async function updateNote(
   newNote: NoteInterface
 ): Promise<Response> {
   return fetch(`${endPoint}/updateNote/${noteId}`, {
-    method: 'PATCH',
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
@@ -53,7 +53,7 @@ export async function updateNote(
 
 export function deleteNote(noteId: number): Promise<Response> {
   return fetch(`${endPoint}/deleteNote/${noteId}`, {
-    method: 'DELETE',
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
