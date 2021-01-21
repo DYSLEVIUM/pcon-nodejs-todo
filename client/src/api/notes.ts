@@ -2,8 +2,8 @@ import NoteInterface from '../models/NoteInterface';
 import { getPublicId } from './publicIP';
 
 //  !   change endpoint later
-// const endPoint = 'http://localhost'; //  development endpoint
-const endPoint = ''; //  production endpoint
+// const endPoint = 'http://localhost/api'; //  development endpoint
+const endPoint = '/api'; //  production endpoint
 export async function addNote(Note: NoteInterface): Promise<Response> {
   return fetch(`${endPoint}/addNote`, {
     method: 'PUT',
