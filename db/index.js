@@ -61,11 +61,11 @@ const getNote = async (noteId) => {
   });
 };
 
-const updateNote = async ({ publicId, title, description, noteId }) => {
+const updateNote = async ({ title, description, noteId }) => {
   return new Promise((resolve, reject) => {
-    let sql = `UPDATE ${tableName} SET publicId=?, title=?, description=? WHERE noteId=?`;
+    let sql = `UPDATE ${tableName} SET title=?, description=? WHERE noteId=?`;
 
-    pool.query(sql, [publicId, title, description, noteId], (err, result) => {
+    pool.query(sql, [title, description, noteId], (err, result) => {
       if (err) {
         return reject(err);
       }

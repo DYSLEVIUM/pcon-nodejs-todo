@@ -47,7 +47,6 @@ router.post('/updateNote/:noteId', (req, res) => {
   //  changed request method from patch to post
   try {
     const newNote = {
-      publicId: req.body.publicId,
       title: req.body.title,
       description: req.body.description,
       noteId: req.params.noteId,
